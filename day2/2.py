@@ -1,23 +1,14 @@
-def difference(b1, b2):
-    cnt, common = 0, ""
-    for i, char in enumerate(b1):
-        if char == b2[i]:
-            common = common + char
-        else:
-            cnt += 1
-    return cnt, common
-
-
-def identify():
-    for i, box in enumerate(boxes):
-        for otherBox in boxes[i:]:
-            cnt, common = difference(box, otherBox)
-            if cnt == 1:
-                return common
-
-
-boxes = None
 with open("data.txt", 'r') as data:
-    boxes = data.readlines()
+    boxes = [box.strip() for box in data.readlines()]
 
-print(identify())
+for i, box in enumerate(boxes):
+    for otherBox in boxes[i+1:]:
+        cnt, common = 0, ""
+        for c1, c2 in zip(box, otherBox):
+            if c1 == c2:
+                common = common + c1
+            else:
+                cnt += 1
+        if cnt == 1:
+            print(common)
+            exit()
